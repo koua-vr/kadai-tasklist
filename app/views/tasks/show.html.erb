@@ -1,0 +1,13 @@
+<!--# ルーティング	:リンク生成メソッドの使用例	:生成されるリンク-->
+<!--# index       	:tasks_path	                :/tasks-->
+<!--# show        	:task_path(@task)         	:/tasks/1 など-->
+<!--# new	          :new_task_path	            :/tasks/new-->
+<!--# edit	        :edit_task_path(@task)      :/tasks/1/edit など-->
+
+<h1>id: <%= @task.id %> のタスク詳細ページ</h1>
+
+<p><%= @task.content %></p>
+
+<%= link_to '一覧に戻る', tasks_path %>
+<%= link_to 'このタスクを編集する', edit_task_path(@task) %>
+<%= link_to 'このタスクを削除する', @task, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>

@@ -1,0 +1,16 @@
+<!--# ルーティング	:リンク生成メソッドの使用例	:生成されるリンク-->
+<!--# index       	:tasks_path	                :/tasks-->
+<!--# show        	:task_path(@task)         	:/tasks/1 など-->
+<!--# new	          :new_task_path	            :/tasks/new-->
+<!--# edit	        :edit_task_path(@task)      :/tasks/1/edit など-->
+
+<h1>タスク一覧</h1>
+
+<ul>
+  <% @tasks.each do |task| %>
+    <!-- [link_to 表示文字列, リンク先] のリンク先が値の場合は showアクション-->
+    <li><%= link_to task.id, task %> : <%= task.content %></li>
+  <% end %>
+</ul>
+
+<%= link_to '新規タスクの投稿', new_task_path %>
