@@ -6,7 +6,16 @@
 
 <h1>id: <%= @task.id %> のタスク詳細ページ</h1>
 
-<p>ステータス: <%= @task.status %></p>
+<p>ステータス:
+  <% case @task.status
+     when "unexecuted" %>
+    未実施
+  <% when "progress" %>
+    実施中
+  <% when "done" %>
+    完了
+  <% end %>
+</p>
 <p>　　タスク: <%= @task.content %></p>
 
 <%= link_to '一覧に戻る', tasks_path %>

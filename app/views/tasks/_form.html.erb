@@ -10,7 +10,8 @@
   <% end %>
   
   <%= f.label :status, 'ステータス' %>
-  <%= f.text_field :status %><br />
+  <%= f.select :status, [["未実施", "unexecuted"], ["実施中", "progress"], ["完了", "done"]],  :prompt => "選択してください" %>
+  <br />
 
   <%= f.label :content, '　　タスク' %>
   <%= f.text_field :content %>
