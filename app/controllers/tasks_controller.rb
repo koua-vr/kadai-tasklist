@@ -19,7 +19,7 @@ class TasksController < ApplicationController
 
   # 各アクション
   def index
-    @tasks = Task.all
+    @tasks = Task.all.page(params[:page]).per(3)
   end
 
   def show
