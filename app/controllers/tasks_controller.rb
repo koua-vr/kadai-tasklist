@@ -15,7 +15,8 @@ class TasksController < ApplicationController
 # 以下、resourceで生成される全てのアクションを実装
 
   # 共通処理
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  # ログインユーザ確認
+  before_action :correct_user, only: [:show, :edit, :update, :destroy]
 
   # 各アクション
   def index
@@ -69,16 +70,13 @@ class TasksController < ApplicationController
 # #########################################
   private
 
-  # taskの取得
-  def set_task
-    @task = Task.find(params[:id])
-  end
-
   # Strong Parameter
   def task_params
     params.require(:task).permit(:content, :status)
   end
-  
+
+  # ログインユーザのtask所有確認
+  # （違うユーザの場合はトップページに戻す）
   def correct_user
     @task = current_user.tasks.find_by(id: params[:id])
     unless @task
