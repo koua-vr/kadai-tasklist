@@ -4,40 +4,51 @@
 <!--# new	          :new_task_path	            :/tasks/new-->
 <!--# edit	        :edit_task_path(@task)      :/tasks/1/edit など-->
 
-<h1>タスク一覧</h1>
+<% if logged_in? %>
 
-<% if !@tasks.nil? %>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>ステータス</th>
-        <th>タスク</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tasks.each do |task| %>
+  <h1>タスク一覧</h1>
+
+  <% if !@tasks.nil? %>
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <!-- [link_to 表示文字列, リンク先] のリンク先が値の場合は showアクション-->
-          <td><%= link_to task.id, task %></td>
-          <td>
-            <% case task.status
-                when "unexecuted" %>
-              未実施
-            <% when "progress" %>
-              実施中
-            <% when "done" %>
-              完了
-            <% end %>
-          </td>
-          <td><%= task.content %></td>
+          <th>id</th>
+          <th>ステータス</th>
+          <th>タスク</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <div>
-    <%= paginate @tasks %>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>
+          <tr>
+            <!-- [link_to 表示文字列, リンク先] のリンク先が値の場合は showアクション-->
+            <td><%= link_to task.id, task %></td>
+            <td>
+              <% case task.status
+                  when "unexecuted" %>
+                未実施
+              <% when "progress" %>
+                実施中
+              <% when "done" %>
+                完了
+              <% end %>
+            </td>
+            <td><%= task.content %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div>
+      <%= paginate @tasks %>
+    </div>
+  <% end %>
+
+  <%= link_to '新規タスクの投稿', new_task_path, class: "btn btn-primary" %>
+
+<% else %>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h1>タスク管理アプリへようこそ</h1>
+      <%= link_to '新規ユーザ登録', signup_path, class: 'btn btn-lg btn-primary' %>
+    </div>
   </div>
 <% end %>
-
-<%= link_to '新規タスクの投稿', new_task_path, class: "btn btn-primary" %>

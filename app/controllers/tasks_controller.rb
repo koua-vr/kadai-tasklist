@@ -16,10 +16,13 @@ class TasksController < ApplicationController
 
   # 共通処理
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :set_tasks, only: [:index]
 
   # 各アクション
   def index
+    if logged_in?
+      @user = current_user
+      @tasks = current_user.tasks.order('created_at DESC').page(params[:page]).per(3)
+    end
   end
 
   def show
@@ -69,11 +72,6 @@ class TasksController < ApplicationController
   # taskの取得
   def set_task
     @task = Task.find(params[:id])
-  end
-
-  # tasksの取得
-  def set_tasks
-    @tasks = current_user.tasks.order('created_at DESC').page(params[:page]).per(3)
   end
 
   # Strong Parameter

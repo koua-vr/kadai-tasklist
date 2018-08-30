@@ -5,11 +5,6 @@ class UsersController < ApplicationController
     @users = User.all.page(params[:page])
   end
 
-  def show
-    @user = User.find(params[:id])
-    @tasks = current_user.tasks.order('created_at DESC').page(params[:page]).per(3)
-  end
-
   def new
     @user = User.new
   end
@@ -19,7 +14,7 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:success] = 'ユーザを登録しました。'
-      redirect_to @tasks
+      redirect_to users_url
     else
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new

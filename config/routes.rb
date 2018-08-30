@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # トップページ(ログイン後は、タスクリスト一覧'tasks#index'）
-  root to: 'toppages#index'
+  # トップページ(タスクリスト一覧）
+  root to: 'tasks#index'
 
   # ログイン
   get 'login', to: 'sessions#new'
@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   # 新規ユーザ登録用
   get 'signup', to: 'users#new'
-  resources :users, only: [:index, :show, :new, :create]
+  resources :users, only: [:index, :new, :create]
 
   # resourcesを利用
   resources :tasks
