@@ -16,10 +16,10 @@ class TasksController < ApplicationController
 
   # 共通処理
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_tasks, only: [:index]
 
   # 各アクション
   def index
-    @tasks = Task.all.page(params[:page]).per(3)
   end
 
   def show
@@ -30,7 +30,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     if @task.save
       flash[:success] = 'Task が正常に投稿されました'
@@ -71,9 +71,21 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  # tasksの取得
+  def set_tasks
+    @tasks = current_user.tasks.order('created_at DESC').page(params[:page]).per(3)
+  end
+
   # Strong Parameter
   def task_params
     params.require(:task).permit(:content, :status)
+  end
+  
+  def correct_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task
+      redirect_to root_url
+    end
   end
 # #########################################
 

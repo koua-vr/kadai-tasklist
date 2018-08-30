@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  # トップページはタスクリスト一覧
-  root to: 'tasks#index'
+  # トップページ(ログイン後は、タスクリスト一覧'tasks#index'）
+  root to: 'toppages#index'
+
+  # ログイン
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+
+  # 新規ユーザ登録用
+  get 'signup', to: 'users#new'
+  resources :users, only: [:index, :show, :new, :create]
 
   # resourcesを利用
   resources :tasks
