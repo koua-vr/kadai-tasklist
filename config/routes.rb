@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   # 新規ユーザ登録用
   get 'signup', to: 'users#new'
-  resources :users, only: [:index, :new, :create]
+  resources :users, only: [:new, :create]
 
   # resourcesを利用
   resources :tasks
